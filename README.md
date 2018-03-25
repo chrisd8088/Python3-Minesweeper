@@ -15,7 +15,7 @@ more efficient, and more elegant, but one has to start somewhere.
 I chose to use a square grid, for simplicity, and on each turn
 the player enters a grid coordinate in `x,y` format, where the horizontal
 and vertical coordinates are both demarcated using letters
-(e.g., `a`, `b`, ...).
+(e.g., `a`, `b`, `c`, etc.)
 
 Cells can be marked with flags by preceding the coordinates
 with either `#` or `?`.  Once flagged, a cell cannot be accidentally
@@ -24,7 +24,7 @@ cleared.
 The `?` flag is intended to indicate you are uncertain
 as to a cell's contents; this flag does not count when determining
 the number of flagged neighbours of a numbered cell (see the notes
-on [Middle-Clicking](#middle-clicking) below).
+on [Middle-Clicking](#clearing-faster-with-middle-clicks) below).
 
 Enter `q` to quit the game.  Enter `h` for a brief help message
 summarizing the game command options.
@@ -69,6 +69,10 @@ wrong places, then "middle-clicking" will end the game!
 
 ## Implementation Notes
 
+- The grid size may be specified on the command-line:
+  `./minesweeper.py [4-24]`
+  - Grids are always square and are limited to sizes between 4x4 and 24x24.
+
 - The player's first selection must be guaranteed to be safe, and
   moreover, all the cells surrounding the first selection must be empty
   of mines as well.
@@ -78,9 +82,12 @@ wrong places, then "middle-clicking" will end the game!
     safe implies that the smallest possible (square) game grid is 4x4.
     (In a 3x3 game, an initial click on the centre cell of a 3x3 grid would
     require all nine cells to be empty.)
+  - Any flag commands entered before the first `x,y` command do not count
+    as this one always-safe selection; mines are moved only after the first
+    regular `x,y` command, and only then.
 
-- Coordinates may also be entered without the `,` separator (i.e., `xy`), or
-  using either `.` or `:` as the separator (e.g., `x.y` or `x:y`).
+- Coordinates may also be entered without the `,` separator (`xy`), or
+  using either `.` or `:` as the separator (`x.y` or `x:y`).
 
 - Adding flags to the game is a necessary step toward supporting
   "middle-click" functionality, and also allows one to protect against

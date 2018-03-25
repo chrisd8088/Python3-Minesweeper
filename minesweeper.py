@@ -293,7 +293,7 @@ while not dead and num_clear < num_to_clear:
 
     ((x, y), req_flags) = read_coords(size)
 
-    if first:
+    if first and req_flags == 0:
         ## move all mines out of neighbourhood of first guess
         empty_cells(size, minefield, x, y)
         calc_field(size, minefield)
